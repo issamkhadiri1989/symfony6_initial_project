@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+{% block title %}Hello DefaultController!{% endblock %}
+{% block body %}
+    {{ form_start(form, {'action': url('app_process_default') }) }}
+        {{ form_row(form) }}
+        <button type="button" id="submit">
+            submit
+        </button>
+    {{ form_end(form) }}
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $(document).ready(function () {
+            $('#submit').on('click', function (e) {
+                const $form = $('form[name=example]');
+                e.preventDefault();
+                $.ajax({
+                    url: $form.attr('action'),
+                    data: $form.serialize(),
+                    type: 'POST',
+                    error: function (a, b, c) {
+                        console.log(a.responseJSON); // to get each error for each  field just example purpose
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}
